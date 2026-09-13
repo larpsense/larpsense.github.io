@@ -23,7 +23,6 @@
 		<nav class="links">
 			<a href="#features">features</a>
 			<a href="#admin">admin</a>
-			<a href="#showcase">showcase</a>
 			<a href="#about">about</a>
 		</nav>
 		<a class="btn small" href="https://github.com/larpsense" target="_blank" rel="noopener">
@@ -96,16 +95,20 @@
 				<span><i data-lucide="check"></i>argument validation</span>
 				<span><i data-lucide="check"></i>suggestions</span>
 			</div>
-		</div>
-	</section>
-
-	<section id="showcase" class="sec">
-		<div class="wrap">
-			<h2><i data-lucide="image"></i>showcase</h2>
-			<figure class="shot">
+			<figure class="shot admin-shot">
 				<img src="assets/admin.png" alt="larpsense admin">
 				<figcaption>larpsense admin — live command bar</figcaption>
 			</figure>
+			<h3 class="mini"><i data-lucide="bell"></i>notifications</h3>
+			<p class="sub">same logic as in-game. pick an icon, type, send.</p>
+			<div class="notif-demo">
+				<label class="fld"><span>title</span><input id="nt" type="text" value="larpsense" maxlength="60"></label>
+				<label class="fld"><span>description</span><input id="nd" type="text" value="loaded successfully" maxlength="200"></label>
+				<label class="fld small"><span>time</span><input id="nm" type="number" value="3" min="1" max="30"></label>
+				<label class="fld small"><span>icon</span><select id="ni"></select></label>
+				<button class="btn" id="nsend" type="button">send notification</button>
+			</div>
+			<p class="priv">main larpsense script is intentionally kept private.</p>
 		</div>
 	</section>
 
@@ -129,6 +132,8 @@
 		<span class="copy">© 2026 Larpsense</span>
 	</div>
 </footer>
+
+<div class="nhold" id="nhold"></div>
 
 <script src="script.js"></script>
 </body>

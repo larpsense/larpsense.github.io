@@ -372,6 +372,154 @@ a.game:hover, span.game:hover { transform: translateY(-1px); }
 	50% { opacity: 1; }
 }
 
+/* showcase inside admin */
+
+.admin-shot { margin-top: 22px; }
+
+/* notifications */
+
+.mini {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	font-size: 15px;
+	font-weight: 800;
+	margin: 26px 0 0;
+}
+
+.mini svg { width: 16px; height: 16px; color: var(--blue); }
+
+.notif-demo {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: flex-end;
+	margin-top: 14px;
+	background: var(--panel);
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	padding: 14px;
+}
+
+.fld { display: flex; flex-direction: column; gap: 6px; flex: 1 1 160px; }
+.fld.small { flex: 0 1 110px; }
+.fld span { font-size: 12px; font-weight: 700; color: var(--dim); }
+
+.fld input, .fld select {
+	background: var(--deep);
+	border: 1px solid var(--line-soft);
+	border-radius: 6px;
+	color: var(--txt);
+	font: 600 13px "Montserrat", sans-serif;
+	padding: 9px 11px;
+	outline: 0;
+	width: 100%;
+}
+
+.fld input:focus, .fld select:focus { border-color: var(--blue); }
+.fld select option { background: var(--deep); }
+
+.priv { color: var(--dim); opacity: 0.45; font-size: 12px; margin-top: 18px; }
+
+/* live replica of admin/utility/main.luau notify */
+
+.nhold {
+	position: fixed;
+	left: 8px;
+	bottom: 8px;
+	z-index: 50;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	pointer-events: none;
+}
+
+.note { background: transparent; }
+
+.nbox {
+	background: #10110f;
+	border: 1px solid #4b4e4a;
+	border-radius: 6px;
+	transform: translateX(-120%);
+	animation: nin 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.nbox.out { animation: nout 0.25s cubic-bezier(0.64, 0, 0.78, 0) forwards; }
+
+.nholder {
+	position: relative;
+	margin: 4px;
+	background: #181a17;
+	border: 1px solid #383838;
+	border-radius: 6px;
+	padding: 8px 14px 19px;
+}
+
+.ntitle {
+	display: flex;
+	align-items: center;
+	height: 22px;
+	font-size: 18px;
+	font-weight: 800;
+	color: #fff;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ntitle.hasicon { margin-left: 20px; }
+
+.nicon {
+	position: absolute;
+	left: 12px;
+	top: 11px;
+	width: 16px;
+	height: 16px;
+	color: var(--blue);
+}
+
+.nicon svg { width: 16px; height: 16px; }
+.nicon.err { color: #ff0000; }
+
+.ndesc {
+	font-size: 16px;
+	line-height: 1.2;
+	color: #aaacaa;
+	margin-top: 6px;
+	overflow-wrap: break-word;
+}
+
+.ntrack {
+	position: absolute;
+	left: 14px;
+	right: 14px;
+	bottom: 8px;
+	height: 3px;
+	background: #272727;
+	border: 1px solid #4f4f4f;
+	border-radius: 4px;
+}
+
+.nfill {
+	height: 100%;
+	width: 100%;
+	background: var(--blue);
+	border-radius: 4px;
+	transition: width linear;
+}
+
+.nfill.err { background: #ff0000; }
+
+@keyframes nin {
+	from { transform: translateX(-120%); }
+	to { transform: none; }
+}
+
+@keyframes nout {
+	from { transform: none; }
+	to { transform: translateX(-120%); }
+}
+
 /* responsive */
 
 @media (max-width: 720px) {

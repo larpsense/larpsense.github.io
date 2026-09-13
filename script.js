@@ -5,7 +5,7 @@ const seen = new IntersectionObserver(
 	(list) => list.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), seen.unobserve(e.target))),
 	{ threshold: 0.12 }
 );
-document.querySelectorAll("h2, .sub, .bar, .ticks, .shot, #about p").forEach((el) => {
+document.querySelectorAll("h2, .sub, .bar, .ticks, .shot, .mini, .notif-demo, #about p").forEach((el) => {
 	el.classList.add("rev");
 	seen.observe(el);
 });
@@ -299,6 +299,86 @@ const demoSeen = new IntersectionObserver((l) => {
 }, { threshold: 0.35 });
 demoSeen.observe(document.getElementById("bar"));
 
+/* live replica of admin/utility/main.luau n.notify(title, text, delay, icon) */
+
+const nhold = document.getElementById("nhold");
+const meas = document.createElement("canvas").getContext("2d");
+
+function mwidth(s, font) {
+	meas.font = font;
+	return meas.measureText(s).width;
+}
+
+function wrapLines(s, maxw) {
+	const words = s.split(/\s+/).filter(Boolean);
+	if (!words.length) return [""];
+	const lines = [];
+	let cur = "";
+	for (const w of words) {
+		const t = cur ? cur + " " + w : w;
+		if (mwidth(t, "400 16px Montserrat") <= maxw || !cur) cur = t;
+		else { lines.push(cur); cur = w; }
+	}
+	lines.push(cur);
+	return lines;
+}
+
+function notify(title, text, delay, icon) {
+	const err = typeof icon === "string";
+	const wt = mwidth(title, "800 18px Montserrat");
+	const wd = mwidth(text, "400 16px Montserrat");
+	const width = Math.min(260, Math.max(80, Math.max(wt + 48, wd + 40)));
+	const lines = wrapLines(text, width - 28);
+	const box = document.createElement("div");
+	box.className = "note";
+	box.style.width = width + "px";
+	box.innerHTML =
+		`<div class="nbox"><div class="nholder">` +
+		(icon ? `<span class="nicon${err ? " err" : ""}"><i data-lucide="${err ? "circle-x" : icon}"></i></span>` : ``) +
+		`<div class="ntitle${icon ? " hasicon" : ""}">${esc(title)}</div>` +
+		`<div class="ndesc">${esc(lines.join("\n")).replace(/\n/g, "<br>")}</div>` +
+		`<div class="ntrack"><div class="nfill${err ? " err" : ""}"></div></div>` +
+		`</div></div>`;
+	nhold.appendChild(box);
+	if (window.lucide) lucide.createIcons();
+	const fill = box.querySelector(".nfill");
+	requestAnimationFrame(() => {
+		fill.style.transitionDuration = delay + "s";
+		fill.style.width = "0";
+	});
+	setTimeout(() => {
+		const inner = box.querySelector(".nbox");
+		inner.classList.add("out");
+		setTimeout(() => box.remove(), 260);
+	}, delay * 1000 + 60);
+}
+
+/* preset icons so nothing is fetched per notification */
+
+const ICONS = [
+	{ id: "ghost", label: "ghost" },
+	{ id: "eye", label: "eye" },
+	{ id: "bell", label: "bell" },
+	{ id: "zap", label: "zap" },
+	{ id: "circle-x", label: "circle-x (error)" },
+	{ id: "none", label: "none" },
+];
+
+const nsel = document.getElementById("ni");
+ICONS.forEach((o) => {
+	const el = document.createElement("option");
+	el.value = o.id;
+	el.textContent = o.label;
+	nsel.appendChild(el);
+});
+
+document.getElementById("nsend").addEventListener("click", () => {
+	const t = document.getElementById("nt").value.trim() || "larpsense";
+	const d = document.getElementById("nd").value.trim() || "loaded successfully";
+	const s = Math.min(30, Math.max(1, Number(document.getElementById("nm").value) || 3));
+	const pick = nsel.value;
+	notify(t, d, s, pick === "none" ? null : pick === "circle-x" ? "" : pick);
+});
 const TITLE = "@ larpsense";
 let ti = TITLE.length, tdir = -1;
 (function tickTitle() {
