@@ -323,19 +323,19 @@ function wrapLines(s, maxw) {
 	return lines;
 }
 
-function notify(title, text, delay, icon) {
-	const err = typeof icon === "string";
+function notify(title, text, delay, icon, err) {
 	const wt = mwidth(title, "800 18px Montserrat");
 	const wd = mwidth(text, "400 16px Montserrat");
 	const width = Math.min(260, Math.max(80, Math.max(wt + 48, wd + 40)));
 	const lines = wrapLines(text, width - 28);
+	const glyph = err ? "circle-x" : icon;
 	const box = document.createElement("div");
 	box.className = "note";
 	box.style.width = width + "px";
 	box.innerHTML =
 		`<div class="nbox"><div class="nholder">` +
-		(icon ? `<span class="nicon${err ? " err" : ""}"><i data-lucide="${err ? "circle-x" : icon}"></i></span>` : ``) +
-		`<div class="ntitle${icon ? " hasicon" : ""}">${esc(title)}</div>` +
+		(glyph ? `<span class="nicon${err ? " err" : ""}"><i data-lucide="${glyph}"></i></span>` : ``) +
+		`<div class="ntitle${glyph ? " hasicon" : ""}">${esc(title)}</div>` +
 		`<div class="ndesc">${esc(lines.join("\n")).replace(/\n/g, "<br>")}</div>` +
 		`<div class="ntrack"><div class="nfill${err ? " err" : ""}"></div></div>` +
 		`</div></div>`;
@@ -377,7 +377,8 @@ document.getElementById("nsend").addEventListener("click", () => {
 	const d = document.getElementById("nd").value.trim() || "loaded successfully";
 	const s = Math.min(30, Math.max(1, Number(document.getElementById("nm").value) || 3));
 	const pick = nsel.value;
-	notify(t, d, s, pick === "none" ? null : pick === "circle-x" ? "" : pick);
+	const iserr = document.getElementById("nerr").checked || pick === "circle-x";
+	notify(t, d, s, iserr ? null : pick === "none" ? null : pick, iserr);
 });
 const TITLE = "@ larpsense";
 let ti = TITLE.length, tdir = -1;

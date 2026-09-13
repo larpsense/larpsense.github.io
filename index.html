@@ -100,12 +100,13 @@
 				<figcaption>larpsense admin — live command bar</figcaption>
 			</figure>
 			<h3 class="mini"><i data-lucide="bell"></i>notifications</h3>
-			<p class="sub">same logic as in-game. pick an icon, type, send.</p>
+			<p class="sub">live demo of the real notifications.</p>
 			<div class="notif-demo">
 				<label class="fld"><span>title</span><input id="nt" type="text" value="larpsense" maxlength="60"></label>
 				<label class="fld"><span>description</span><input id="nd" type="text" value="loaded successfully" maxlength="200"></label>
 				<label class="fld small"><span>time</span><input id="nm" type="number" value="3" min="1" max="30"></label>
 				<label class="fld small"><span>icon</span><select id="ni"></select></label>
+				<label class="fld chk"><span>error</span><span class="switch"><input id="nerr" type="checkbox"><i></i></span></label>
 				<button class="btn" id="nsend" type="button">send notification</button>
 			</div>
 			<p class="priv">main larpsense script is intentionally kept private.</p>

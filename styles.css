@@ -387,6 +387,8 @@ a.game:hover, span.game:hover { transform: translateY(-1px); }
 	margin: 26px 0 0;
 }
 
+.mini + .sub { margin-top: 4px; }
+
 .mini svg { width: 16px; height: 16px; color: var(--blue); }
 
 .notif-demo {
@@ -418,6 +420,43 @@ a.game:hover, span.game:hover { transform: translateY(-1px); }
 
 .fld input:focus, .fld select:focus { border-color: var(--blue); }
 .fld select option { background: var(--deep); }
+
+.fld.chk { flex: 0 1 auto; }
+
+.switch { position: relative; display: inline-block; width: 38px; height: 21px; margin: 8px 0; }
+
+.switch input {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	margin: 0;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.switch i {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	background: var(--deep);
+	border: 1px solid var(--line-soft);
+	border-radius: 20px;
+	pointer-events: none;
+}
+
+.switch i::after {
+	content: "";
+	width: 17px;
+	height: 17px;
+	flex-shrink: 0;
+	border-radius: 50%;
+	background: var(--dim);
+	margin-left: 1px;
+	transition: margin-left 0.15s, background 0.15s;
+}
+
+.switch input:checked + i::after { margin-left: calc(100% - 18px); background: #ff0000; }
 
 .priv { color: var(--dim); opacity: 0.45; font-size: 12px; margin-top: 18px; }
 
